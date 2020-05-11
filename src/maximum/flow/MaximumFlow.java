@@ -5,27 +5,56 @@
  */
 package maximum.flow;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class MaximumFlow {
 
     public static HashMap<String, Node> nodes;
-    private static Node startNode;
-    private static Node finishNode;
+    public static Node startNode;
+    public static Node finishNode;
     private static boolean isGraph = false;
     
     
     public static void main(String[] args) {
-        
         nodes = new HashMap<>();
+        
+        
+        
         GUI myGUI = new GUI();
         myGUI.setVisible(true);
         
         
+    }
+    
+    public static String readFile(String fileName){
+        
+        try {
+            
+            File file = new File(fileName);
+            Scanner sc = new Scanner(file);
+            
+            while (sc.hasNextLine()){
+                
+                String str = sc.nextLine();
+                System.out.println(str);
+                addNodes(str);
+            }
+            
+            return "Dosya okundu.";
+                
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MaximumFlow.class.getName()).log(Level.SEVERE, null, ex);
+            return "Dosya okunamadı!";
+        }
     }
     
     //Eğer label adında bir node varsa döndürür yoksa yeni bir node oluşturur bunu nodes collectionuna ekler ve döndürür.
@@ -77,6 +106,8 @@ public class MaximumFlow {
     
     
     public static void clearGraph(){
+        startNode = null;
+        finishNode = null;
         isGraph = false;
         nodes.clear();
         
@@ -84,16 +115,7 @@ public class MaximumFlow {
     
     public static boolean checkGraph(){
         
-        if(startNode == null || finishNode == null)
-            return false;
-        
-        for(Node node: nodes.values()){
-            System.out.println(node.getLabel() + " dan hesaplamaya başlıyor.");
-            checkGraph2(node,new ArrayList<>());
-            return isGraph;
-        }
-            
-        return isGraph;
+        return startNode != null && finishNode != null;
     }
     
     public static void checkGraph2(Node tempRoot,ArrayList<Node> path){

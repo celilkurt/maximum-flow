@@ -5,14 +5,17 @@
  */
 package maximum.flow;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.WindowEvent;
 
 /**
  *
  * @author asus
  */
 public class GUI extends javax.swing.JFrame {
-
+    
+    GraphGraphic curGraphic;
     /**
      * Creates new form GUI
      */
@@ -20,11 +23,7 @@ public class GUI extends javax.swing.JFrame {
         initComponents();
     }
 
-    @Override
-    public void paint(Graphics g) 
-    {
-         g.drawRect(200, 200, 100, 100);
-    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,6 +45,8 @@ public class GUI extends javax.swing.JFrame {
         ClearGraph = new javax.swing.JButton();
         ShowGraph = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        fileNameText = new javax.swing.JTextField();
+        readFileButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,7 +122,7 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(CheckGraph, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(ClearGraph)
                 .addContainerGap())
         );
@@ -144,15 +145,34 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 0));
 
+        fileNameText.setText("commands.txt");
+
+        readFileButton.setText("Read File");
+        readFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readFileButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1109, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(fileNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(readFileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(readFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                    .addComponent(fileNameText))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -216,12 +236,34 @@ public class GUI extends javax.swing.JFrame {
         MaximumFlow.clearGraph();
         MessageText.setText("Graf temizlendi.");
     }//GEN-LAST:event_ClearGraphActionPerformed
-
+    
+    
     private void ShowGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowGraphActionPerformed
         
+        if(MaximumFlow.checkGraph())
+            if(curGraphic == null){
+                curGraphic = new GraphGraphic();
+                curGraphic.setSize(700,700);
+                //graphic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                curGraphic.setVisible(true);
+            }else{
+                
+                curGraphic.repaint();
+                
+            }
+        else
+            MessageText.setText("Graf çizilmeye uygun değil.");
         
         
     }//GEN-LAST:event_ShowGraphActionPerformed
+
+    private void readFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readFileButtonActionPerformed
+
+        String fileName = fileNameText.getText();
+        String message = MaximumFlow.readFile(fileName);
+        MessageText.setText(message);
+        
+    }//GEN-LAST:event_readFileButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,9 +308,11 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel MessageText;
     private javax.swing.JButton ShowGraph;
     private javax.swing.JButton SubmitButton;
+    private javax.swing.JTextField fileNameText;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton readFileButton;
     // End of variables declaration//GEN-END:variables
 }
