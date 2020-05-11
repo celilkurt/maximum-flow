@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 public class MaximumFlow {
 
     public static HashMap<String, Node> nodes;
-    public static Node startNode;
-    public static Node finishNode;
+    public static Node sourceNode;
+    public static Node targetNode;
     private static boolean isGraph = false;
     
     
@@ -75,11 +75,11 @@ public class MaximumFlow {
         String[] words = str.split(" ");
         
         if(words[0].equals("#")){
-            startNode = getOrCreateNode(words[1]);
+            sourceNode = getOrCreateNode(words[1]);
             
             return "Giriş node'u kayıt edildi.";
         }else if(words[0].equals("@")){
-            finishNode = getOrCreateNode(words[1]);
+            targetNode = getOrCreateNode(words[1]);
             
             return "Çıkış node'u kayıt edildi.";
         }else if(words.length%2 == 1){
@@ -106,8 +106,8 @@ public class MaximumFlow {
     
     
     public static void clearGraph(){
-        startNode = null;
-        finishNode = null;
+        sourceNode = null;
+        targetNode = null;
         isGraph = false;
         nodes.clear();
         
@@ -115,7 +115,7 @@ public class MaximumFlow {
     
     public static boolean checkGraph(){
         
-        return startNode != null && finishNode != null;
+        return sourceNode != null && targetNode != null;
     }
     
     public static void checkGraph2(Node tempRoot,ArrayList<Node> path){

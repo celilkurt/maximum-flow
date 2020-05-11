@@ -29,8 +29,8 @@ public class GraphGraphic extends javax.swing.JFrame {
         g.setColor(new Color(0,85,0));
         g.fillRect(0, 0, getWidth(), getHeight());
         
-        paintNodes(g,MaximumFlow.startNode,new ArrayList<>(),100,getHeight()/2,100);
-        paintRelations(g,MaximumFlow.startNode,new ArrayList<>());
+        paintNodes(g,MaximumFlow.sourceNode,new ArrayList<>(),100,getHeight()/2,100);
+        paintRelations(g,MaximumFlow.sourceNode,new ArrayList<>());
         //g.setColor(Color.red);
         //g.fillOval(20, 50, 100, 100);
         
