@@ -1,9 +1,6 @@
-A B 20 C 30 F 8 W 3
-B E 30
-C E 20 F 15
-F E 3 S 5
-S E 134
-E W 12 R 31
-R W 121 E 2 S 12
+A B 30 C 6
+B E 2
+C R 1
+R E 11
 # A
 @ E

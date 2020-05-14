@@ -25,12 +25,17 @@ public class GraphGraphic extends javax.swing.JFrame {
 
     @Override
     public void paint(Graphics g) {
-
-        g.setColor(new Color(0,85,0));
-        g.fillRect(0, 0, getWidth(), getHeight());
         
-        paintNodes(g,MaximumFlow.sourceNode,new ArrayList<>(),100,getHeight()/2,100);
-        paintRelations(g,MaximumFlow.sourceNode,new ArrayList<>());
+        try{
+            g.setColor(new Color(0,85,0));
+            g.fillRect(0, 0, getWidth(), getHeight());
+
+            paintNodes(g,MaximumFlow.sourceNode,new ArrayList<>(),100,getHeight()/2,100);
+            paintRelations(g,MaximumFlow.sourceNode,new ArrayList<>());
+        }catch(Exception e){
+            
+        }
+        
         //g.setColor(Color.red);
         //g.fillOval(20, 50, 100, 100);
         
@@ -53,12 +58,11 @@ public class GraphGraphic extends javax.swing.JFrame {
         x += nodeDistance;
         
         int count = 0;
-        for(Node node: tempRoot.getChildList())
+        for(Node node: tempRoot.getChildList())//temproot'un çizilmeyen düğümleri sayılıyor.
             if(!coorMap.containsKey(node))
                 count++;
         
-        y -= ((count - 1)*nodeDistance)/2;
-        
+        y -= ((count - 1)*nodeDistance)/2;//Düğümlerin nereden itibaren çizileceğini hesaplar.
         
         for(Node node:tempRoot.getChildList())
             if(!coorMap.containsKey(node)){
@@ -66,13 +70,14 @@ public class GraphGraphic extends javax.swing.JFrame {
                 
                 drawNode(g,x,y,25,25,node.getLabel());
                 coorMap.put(node, new Coordinat(x,y));
-                
+                //drawLineBetweenNodes(g,coorMap.get(tempRoot),coorMap.get(node),tempRoot.getCapacities().get(node));
                 y += nodeDistance;
             }
         
-        for(Node node: tempRoot.getChildList())
+        int meter = 0;
+        for(Node node: tempRoot.getChildList())//İlişkili olan her düğüm için eğer daha önce yapılmadıysa işlem tekrarlanıyor.
             if(!blackList.contains(node)){
-                paintNodes(g,node,blackList,x,getHeight()/2,nodeDistance);
+                paintNodes(g,node,blackList,x+nodeDistance*meter++,getHeight()/2,nodeDistance);
             }
                 
             
@@ -93,17 +98,10 @@ public class GraphGraphic extends javax.swing.JFrame {
         Coordinat coor = coorMap.get(tempRoot);
         
         
-        for(Node node:tempRoot.getChildList())
-            if(!blackList.contains(node)){
+        for(Node node:tempRoot.getChildList()){
+            drawLineBetweenNodes(g,coorMap.get(tempRoot),coorMap.get(node),tempRoot.getCapacities().get(node));
+        }
             
-                Coordinat coor2 = coorMap.get(node);
-                g.setColor(Color.black);
-                g.drawLine(coor.getX()+12, coor.getY()+12, coor2.getX()+ 12, coor2.getY()+12);
-
-                g.setColor(Color.white);
-                g.drawString(String.valueOf(tempRoot.getCapacities().get(node)), coor.getX()*2/3 + coor2.getX()*1/3 + 12 , coor.getY()*2/3 + coor2.getY()*1/3 + 12);
-           
-            }
         
         blackList.add(tempRoot);
             
@@ -114,12 +112,14 @@ public class GraphGraphic extends javax.swing.JFrame {
         
     }
     
-    public void updateGraphic(){
+    public void drawLineBetweenNodes(Graphics g,Coordinat coor,Coordinat coor2,int capacity){
         
-        
-        revalidate();
-        repaint();
-        
+        g.setColor(Color.black);
+        g.drawLine(coor.getX()+12, coor.getY()+12, coor2.getX()+ 12, coor2.getY()+12);
+
+        g.setColor(Color.white);
+        g.drawString(String.valueOf(capacity), coor.getX()*2/3 + coor2.getX()*1/3 + 12 , coor.getY()*2/3 + coor2.getY()*1/3 + 12);
+           
     }
     
     @SuppressWarnings("unchecked")

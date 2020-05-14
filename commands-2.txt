@@ -1,5 +1,5 @@
-A B 20 C 30 F 8 W 3
-E R 4 C 23 W 56
-S R 23 B 12 W 14
-# C
+A B 20 C 14 W 13
+C R 4 E 23
+W C 16
+# A
 @ E

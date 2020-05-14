@@ -44,6 +44,7 @@ public class GUI extends javax.swing.JFrame {
         CheckGraph = new javax.swing.JButton();
         ShowGraph = new javax.swing.JButton();
         clearGraphButton = new javax.swing.JButton();
+        closeWindowButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         BFSButton = new javax.swing.JButton();
         DFSButton = new javax.swing.JButton();
@@ -128,6 +129,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        closeWindowButton.setText("Close Graph Window");
+        closeWindowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeWindowButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -137,7 +145,8 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CheckGraph, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ShowGraph, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clearGraphButton))
+                    .addComponent(clearGraphButton)
+                    .addComponent(closeWindowButton))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -149,7 +158,9 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(ShowGraph)
                 .addGap(18, 18, 18)
                 .addComponent(clearGraphButton)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(closeWindowButton)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 0));
@@ -227,7 +238,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +278,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_DFSButtonActionPerformed
 
     private void BFSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFSButtonActionPerformed
-        // TODO add your handling code here:
+        
+        MaximumFlow.findMaxCapacity(MaximumFlow.sourceNode, Integer.MAX_VALUE);
+        messageTextField.setText(MaximumFlow.totalCapacity + " kadar akış sağlanabilir.");
     }//GEN-LAST:event_BFSButtonActionPerformed
 
     private void CheckGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckGraphActionPerformed
@@ -284,13 +297,11 @@ public class GUI extends javax.swing.JFrame {
         if(MaximumFlow.checkGraph())
             if(curGraphic == null){
                 curGraphic = new GraphGraphic();
-                curGraphic.setSize(700,700);
+                curGraphic.setSize(900,700);
                 //graphic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 curGraphic.setVisible(true);
             }else{
-                
                 curGraphic.repaint();
-                
             }
         else
             messageTextField.setText("Graf çizilmeye uygun değil.");
@@ -309,7 +320,18 @@ public class GUI extends javax.swing.JFrame {
     private void clearGraphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearGraphButtonActionPerformed
         MaximumFlow.clearGraph();
         messageTextField.setText("Graf temizlendi.");
+        if(curGraphic != null)
+            curGraphic.repaint();
     }//GEN-LAST:event_clearGraphButtonActionPerformed
+
+    private void closeWindowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowButtonActionPerformed
+        
+        if(curGraphic != null)
+            curGraphic.setVisible(false);
+        
+        curGraphic = null;
+        
+    }//GEN-LAST:event_closeWindowButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,6 +375,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton ShowGraph;
     private javax.swing.JButton SubmitButton;
     private javax.swing.JButton clearGraphButton;
+    private javax.swing.JButton closeWindowButton;
     private javax.swing.JTextField fileNameText;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
