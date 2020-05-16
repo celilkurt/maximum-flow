@@ -20,6 +20,7 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     public GUI() {
+        
         initComponents();
     }
 
@@ -279,8 +280,18 @@ public class GUI extends javax.swing.JFrame {
 
     private void BFSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFSButtonActionPerformed
         
-        MaximumFlow.findMaxCapacity(MaximumFlow.sourceNode, Integer.MAX_VALUE);
-        messageTextField.setText(MaximumFlow.totalCapacity + " kadar akış sağlanabilir.");
+        
+        if(MaximumFlow.checkGraph()){
+            MaximumFlow.findMaxCapacity(MaximumFlow.sourceNode, Integer.MAX_VALUE);
+            messageTextField.setText(MaximumFlow.totalCapacity + " kadar akış sağlanabilir.");
+            
+        }
+        
+        if(curGraphic == null){
+            setCurGraphic();
+        }else
+            curGraphic.setVisible(true);
+        
     }//GEN-LAST:event_BFSButtonActionPerformed
 
     private void CheckGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckGraphActionPerformed
@@ -296,10 +307,7 @@ public class GUI extends javax.swing.JFrame {
         
         if(MaximumFlow.checkGraph())
             if(curGraphic == null){
-                curGraphic = new GraphGraphic();
-                curGraphic.setSize(900,700);
-                //graphic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                curGraphic.setVisible(true);
+                setCurGraphic();
             }else{
                 curGraphic.repaint();
             }
@@ -333,6 +341,14 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_closeWindowButtonActionPerformed
 
+    
+    public void setCurGraphic(){
+        curGraphic = new GraphGraphic();
+        curGraphic.setSize(1200,700);
+        //graphic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        curGraphic.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */

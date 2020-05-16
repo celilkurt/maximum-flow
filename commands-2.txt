@@ -1,5 +1,9 @@
-A B 20 C 14 W 13
-C R 4 E 23
-W C 16
-# A
-@ E
+S A 8 B 7 C 4
+A D 3 E 9 B 2
+B E 6 C 5
+C E 7 F 2
+D T 9
+E D 3 T 5 F 4
+F T 8
+# S
+@ T

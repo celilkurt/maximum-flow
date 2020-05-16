@@ -10,12 +10,14 @@ public class Node {
     
     private ArrayList<Node> childList;
     private HashMap<Node, Integer> capacities;
+    private HashMap<Node, Integer> capacitiesBackup;
     private String label;
     
     public Node(String label){
         this.label = label;
         childList = new ArrayList<>();
         capacities = new HashMap<>();
+        capacitiesBackup = new HashMap<>();
     }
 
     public ArrayList<Node> getChildList() {
@@ -52,6 +54,34 @@ public class Node {
         }
     }
     
+    public void addNodeToBackup(Node newNode,int capacity){
+        
+        if(!capacitiesBackup.containsKey(newNode)){
+            capacitiesBackup.put(newNode,capacity);
+        }else{
+            capacitiesBackup.replace(newNode, capacity);
+        }
+    }
+
+    public HashMap<Node, Integer> getCapacitiesBackup() {
+        return capacitiesBackup;
+    }
+
+    public void setCapacitiesBackup(HashMap<Node, Integer> capacitiesBackup) {
+        this.capacitiesBackup = capacitiesBackup;
+    }
+    
+    public int getSpentCapacity(Node node){
+        
+        if(capacities.containsKey(node) && capacitiesBackup.containsKey(node))
+            return capacitiesBackup.get(node) - capacities.get(node);
+        
+        return 0;
+        
+        
+    }
+    
+   
     public void printChildAndCapacity(){
         
         childList.forEach((node) -> {

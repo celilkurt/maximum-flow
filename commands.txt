@@ -1,4 +1,4 @@
-A B 30 C 6
+A B 30 C 6 E 13
 B E 2
 C R 1
 R E 11

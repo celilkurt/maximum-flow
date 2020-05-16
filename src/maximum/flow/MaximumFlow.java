@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 public class MaximumFlow {
 
     public static HashMap<String, Node> nodes;
-    public static HashMap<Node,HashMap<Node, Integer>> curCapacities;
     public static Node sourceNode;
     public static Node targetNode;
     private static boolean isGraph = false;
@@ -26,11 +25,8 @@ public class MaximumFlow {
     
     
     public static void main(String[] args) {
+        
         nodes = new HashMap<>();
-        curCapacities = new HashMap<>();
-        
-        
-        
         GUI myGUI = new GUI();
         myGUI.setVisible(true);
         
@@ -94,10 +90,10 @@ public class MaximumFlow {
                 Node newNode = getOrCreateNode(words[i]);
                 int capacity = Integer.valueOf(words[i+1]);
                 root.addNode(newNode, capacity);//newNode daha önce eklenmediyse ekler eklendiyse kapasitesini günceller.
-                //newNode.addNode(root,capacity);
-                root.printChildAndCapacity();//root'un bütün komşularını kapasiteleri ile yazdırır.
+                root.addNodeToBackup(newNode,capacity);
                 
             }
+            root.printChildAndCapacity();//root'un bütün komşularını kapasiteleri ile yazdırır.
             return "Graph düzenlendi.";
         
         }else{
@@ -109,6 +105,7 @@ public class MaximumFlow {
     
     
     public static void clearGraph(){
+        
         totalCapacity = 0;
         sourceNode = null;
         targetNode = null;
@@ -154,9 +151,7 @@ public class MaximumFlow {
     
     public void calMaxFlow(){//calculate maximum flow
         
-        defCurCapacities();
         findMaxCapacity(sourceNode,Integer.MAX_VALUE);
-        
         
         
     }
@@ -194,14 +189,6 @@ public class MaximumFlow {
        return spentCapacity; 
     }
     
-    public void defCurCapacities(){
-        
-        nodes.values().forEach((Node node) -> {
-            curCapacities.put(node, (HashMap<Node,Integer>)node.getCapacities().clone());
-        });
-        //for(Node node: nodes.values())
-        //    curCapacities.put(node, (HashMap<Node,Integer>)node.getCapacities().clone());
-             
-    }
+    
     
 }
