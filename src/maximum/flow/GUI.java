@@ -8,6 +8,9 @@ package maximum.flow;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,6 +52,7 @@ public class GUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         BFSButton = new javax.swing.JButton();
         DFSButton = new javax.swing.JButton();
+        findMinCutButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         messageTextField = new javax.swing.JLabel();
 
@@ -180,6 +184,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        findMinCutButton.setText("Find Min Cut");
+        findMinCutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findMinCutButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -187,6 +198,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(findMinCutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BFSButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DFSButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
@@ -198,6 +210,8 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(BFSButton)
                 .addGap(18, 18, 18)
                 .addComponent(DFSButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(findMinCutButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -280,17 +294,14 @@ public class GUI extends javax.swing.JFrame {
 
     private void BFSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFSButtonActionPerformed
         
-        
         if(MaximumFlow.checkGraph()){
             MaximumFlow.findMaxCapacity(MaximumFlow.sourceNode, Integer.MAX_VALUE);
             messageTextField.setText(MaximumFlow.totalCapacity + " kadar akış sağlanabilir.");
             
         }
         
-        if(curGraphic == null){
-            setCurGraphic();
-        }else
-            curGraphic.setVisible(true);
+        closeWindow();
+        setCurGraphic();
         
     }//GEN-LAST:event_BFSButtonActionPerformed
 
@@ -309,7 +320,8 @@ public class GUI extends javax.swing.JFrame {
             if(curGraphic == null){
                 setCurGraphic();
             }else{
-                curGraphic.repaint();
+                closeWindow();
+                setCurGraphic();
             }
         else
             messageTextField.setText("Graf çizilmeye uygun değil.");
@@ -334,12 +346,20 @@ public class GUI extends javax.swing.JFrame {
 
     private void closeWindowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowButtonActionPerformed
         
-        if(curGraphic != null)
-            curGraphic.setVisible(false);
-        
-        curGraphic = null;
+        closeWindow();
         
     }//GEN-LAST:event_closeWindowButtonActionPerformed
+
+    private void findMinCutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findMinCutButtonActionPerformed
+        
+        int totalCut = MaximumFlow.findMinCut(MaximumFlow.sourceNode,new ArrayList<>());
+        messageTextField.setText("Yapılabilecek minimum kesinti: " + totalCut );
+        
+        MaximumFlow.totalCapacity = 0;
+        
+        
+        
+    }//GEN-LAST:event_findMinCutButtonActionPerformed
 
     
     public void setCurGraphic(){
@@ -347,6 +367,15 @@ public class GUI extends javax.swing.JFrame {
         curGraphic.setSize(1200,700);
         //graphic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         curGraphic.setVisible(true);
+    }
+    
+    public void closeWindow(){
+        
+        if(curGraphic != null)
+            curGraphic.setVisible(false);
+        
+        curGraphic = null;
+        
     }
     
     /**
@@ -393,6 +422,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton clearGraphButton;
     private javax.swing.JButton closeWindowButton;
     private javax.swing.JTextField fileNameText;
+    private javax.swing.JButton findMinCutButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

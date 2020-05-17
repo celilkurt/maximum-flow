@@ -234,9 +234,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="findMinCutButton" min="-2" pref="137" max="-2" attributes="0"/>
                           <Component id="BFSButton" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
                           <Component id="DFSButton" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
                       </Group>
@@ -251,6 +252,8 @@
                       <Component id="BFSButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="DFSButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="findMinCutButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -271,6 +274,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DFSButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="findMinCutButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Find Min Cut"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="findMinCutButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

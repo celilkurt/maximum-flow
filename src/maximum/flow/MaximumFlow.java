@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +21,7 @@ public class MaximumFlow {
     public static Node targetNode;
     private static boolean isGraph = false;
     public static int totalCapacity;
+    public static int totalCut = 0;
     
     
     public static void main(String[] args) {
@@ -106,6 +106,7 @@ public class MaximumFlow {
     
     public static void clearGraph(){
         
+        totalCut = 0;
         totalCapacity = 0;
         sourceNode = null;
         targetNode = null;
@@ -189,6 +190,37 @@ public class MaximumFlow {
        return spentCapacity; 
     }
     
+    public static int findMinCut(Node tempRoot, ArrayList<Node> blackList){
+        
+        blackList.add(tempRoot);
+        
+        for(Node node: tempRoot.getCapacities().keySet()){
+            
+            if(tempRoot.getCapacities().get(node) == 0){
+                tempRoot.getChildList().remove(node);
+                totalCut += tempRoot.getCapacitiesBackup().get(node);
+                resetCapacities();
+                findMaxCapacity(sourceNode,Integer.MAX_VALUE);
+            }else if(!blackList.contains(node) && tempRoot.getSpentCapacity(node) != 0)
+                findMinCut(node,blackList);
+                
+        }
+        
+        return totalCut;
+        
+    }
     
+    
+    public static void resetCapacities(){
+        
+        for(Node node: nodes.values()){
+            
+            for(Node tempNode: node.getChildList()){
+                node.getCapacities().replace(tempNode, node.getCapacitiesBackup().get(tempNode));
+            }
+            
+        }
+        
+    }
     
 }
