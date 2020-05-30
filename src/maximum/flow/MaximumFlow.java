@@ -190,23 +190,33 @@ public class MaximumFlow {
        return spentCapacity; 
     }
     
-    public static int findMinCut(Node tempRoot, ArrayList<Node> blackList){
+    private static String message = "";
+    
+    public static String calMinCut(){
+        
+        message = "Kesilmesi gereken bağlantılar: "; 
+        findMinCut(MaximumFlow.sourceNode,new ArrayList<>());
+        message += "\nMinimum " +  String.valueOf(totalCut) + " kapasiteli kesim yapılmalı.";
+        return message;
+    }
+    
+    public static void findMinCut(Node tempRoot, ArrayList<Node> blackList){
         
         blackList.add(tempRoot);
         
         for(Node node: tempRoot.getCapacities().keySet()){
             
             if(tempRoot.getCapacities().get(node) == 0){
-                tempRoot.getChildList().remove(node);
+                
                 totalCut += tempRoot.getCapacitiesBackup().get(node);
+                tempRoot.getCapacitiesBackup().put(node, 0);
+                message += tempRoot.getLabel() + "-" + node.getLabel() + "  ";
                 resetCapacities();
                 findMaxCapacity(sourceNode,Integer.MAX_VALUE);
             }else if(!blackList.contains(node) && tempRoot.getSpentCapacity(node) != 0)
                 findMinCut(node,blackList);
                 
         }
-        
-        return totalCut;
         
     }
     

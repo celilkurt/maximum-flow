@@ -352,11 +352,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void findMinCutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findMinCutButtonActionPerformed
         
-        int totalCut = MaximumFlow.findMinCut(MaximumFlow.sourceNode,new ArrayList<>());
-        messageTextField.setText("Yapılabilecek minimum kesinti: " + totalCut );
+        String message = MaximumFlow.calMinCut();
+        messageTextField.setText(message );
         
-        MaximumFlow.totalCapacity = 0;
-        
+        MaximumFlow.totalCapacity = 0;        
         
         
     }//GEN-LAST:event_findMinCutButtonActionPerformed
