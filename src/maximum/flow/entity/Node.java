@@ -1,6 +1,6 @@
 
 
-package maximum.flow;
+package maximum.flow.entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

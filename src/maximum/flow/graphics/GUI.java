@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package maximum.flow;
+package maximum.flow.graphics;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import maximum.flow.GraphUtils;
+import maximum.flow.MaximumFlow;
+
 
 /**
  *
@@ -51,10 +48,10 @@ public class GUI extends javax.swing.JFrame {
         closeWindowButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         BFSButton = new javax.swing.JButton();
-        DFSButton = new javax.swing.JButton();
         findMinCutButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         messageTextField = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,22 +162,15 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(clearGraphButton)
                 .addGap(18, 18, 18)
                 .addComponent(closeWindowButton)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 0));
 
-        BFSButton.setText("with Edmonds Karp F(BFS]");
+        BFSButton.setText("Find Max Flow(BFS)");
         BFSButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BFSButtonActionPerformed(evt);
-            }
-        });
-
-        DFSButton.setText("with Ford F(DFS]");
-        DFSButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DFSButtonActionPerformed(evt);
             }
         });
 
@@ -198,9 +188,8 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(findMinCutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BFSButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DFSButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(findMinCutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -209,10 +198,8 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(BFSButton)
                 .addGap(18, 18, 18)
-                .addComponent(DFSButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(findMinCutButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 51, 0));
@@ -222,20 +209,31 @@ public class GUI extends javax.swing.JFrame {
         messageTextField.setForeground(new java.awt.Color(51, 255, 0));
         messageTextField.setText("message");
 
+        jLabel1.setBackground(new java.awt.Color(51, 255, 0));
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 255, 0));
+        jLabel1.setText("Message");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(messageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(messageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(messageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(messageTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -259,13 +257,14 @@ public class GUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,7 +275,9 @@ public class GUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,19 +285,15 @@ public class GUI extends javax.swing.JFrame {
 
     private void SubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitButtonActionPerformed
         String str = jTextField1.getText();
-        String message = MaximumFlow.addNodes(str);
+        String message = GraphUtils.createGraph(str);
         messageTextField.setText(message);
     }//GEN-LAST:event_SubmitButtonActionPerformed
 
-    private void DFSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DFSButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DFSButtonActionPerformed
-
     private void BFSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BFSButtonActionPerformed
         
-        if(MaximumFlow.checkGraph()){
-            MaximumFlow.findMaxCapacity(MaximumFlow.sourceNode, Integer.MAX_VALUE);
-            messageTextField.setText(MaximumFlow.totalCapacity + " kadar akış sağlanabilir.");
+        if(GraphUtils.checkGraph()){
+            GraphUtils.findMaxCapacity(GraphUtils.sourceNode, Integer.MAX_VALUE);
+            messageTextField.setText(GraphUtils.totalCapacity + " kadar akış sağlanabilir.");
             
         }
         
@@ -306,7 +303,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BFSButtonActionPerformed
 
     private void CheckGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckGraphActionPerformed
-        if(MaximumFlow.checkGraph())
+        if(GraphUtils.checkGraph())
             messageTextField.setText("Graf tutarlı.");
         else
             messageTextField.setText("Graf tutarsız");
@@ -316,7 +313,7 @@ public class GUI extends javax.swing.JFrame {
     
     private void ShowGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowGraphActionPerformed
         
-        if(MaximumFlow.checkGraph())
+        if(GraphUtils.checkGraph())
             if(curGraphic == null){
                 setCurGraphic();
             }else{
@@ -338,7 +335,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_readFileButtonActionPerformed
 
     private void clearGraphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearGraphButtonActionPerformed
-        MaximumFlow.clearGraph();
+        GraphUtils.clearGraph();
         messageTextField.setText("Graf temizlendi.");
         if(curGraphic != null)
             curGraphic.repaint();
@@ -352,10 +349,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void findMinCutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findMinCutButtonActionPerformed
         
-        String message = MaximumFlow.calMinCut();
+        String message = GraphUtils.calMinCut();
         messageTextField.setText(message );
         
-        MaximumFlow.totalCapacity = 0;        
+        GraphUtils.totalCapacity = 0;        
         
         
     }//GEN-LAST:event_findMinCutButtonActionPerformed
@@ -415,13 +412,13 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BFSButton;
     private javax.swing.JButton CheckGraph;
-    private javax.swing.JButton DFSButton;
     private javax.swing.JButton ShowGraph;
     private javax.swing.JButton SubmitButton;
     private javax.swing.JButton clearGraphButton;
     private javax.swing.JButton closeWindowButton;
     private javax.swing.JTextField fileNameText;
     private javax.swing.JButton findMinCutButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

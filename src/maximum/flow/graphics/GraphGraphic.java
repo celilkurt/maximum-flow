@@ -1,11 +1,14 @@
 
 
-package maximum.flow;
+package maximum.flow.graphics;
 
+import maximum.flow.entity.Node;
+import maximum.flow.entity.Coordinat;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
+import maximum.flow.GraphUtils;
 
 /**
  *
@@ -29,15 +32,15 @@ public class GraphGraphic extends javax.swing.JFrame {
     @Override
     public void paint(Graphics g) {
         
-        nodeDistance = MaximumFlow.nodes.size()*30;
+        nodeDistance = GraphUtils.nodes.size()*30;
         setWidthAndHeight();//Düğüm sayısına göre ekran büyüklüğünün ayarlanması için.
         
         try{
             g.setColor(new Color(0,85,0));
             g.fillRect(0, 0, getWidth(), getHeight());
             
-            paintNodes(g,MaximumFlow.sourceNode,new ArrayList<>(),100,getHeight()/2,nodeDistance);
-            paintRelations(g,MaximumFlow.sourceNode,new ArrayList<>());
+            paintNodes(g,GraphUtils.sourceNode,new ArrayList<>(),100,getHeight()/2,nodeDistance);
+            paintRelations(g,GraphUtils.sourceNode,new ArrayList<>());
         }catch(Exception e){
             
         }
@@ -58,7 +61,7 @@ public class GraphGraphic extends javax.swing.JFrame {
         
         if(!coorMap.containsKey(tempRoot)){
             
-            if(tempRoot == MaximumFlow.sourceNode)
+            if(tempRoot == GraphUtils.sourceNode)
                 drawNode(g,x,y,25,25,tempRoot.getLabel(),Color.black);
             else
                 drawNode(g,x,y,25,25,tempRoot.getLabel(),Color.red);
@@ -76,7 +79,7 @@ public class GraphGraphic extends javax.swing.JFrame {
         for(Node node:tempRoot.getChildList())
             if(!coorMap.containsKey(node)){
                 
-                if(node == MaximumFlow.targetNode)
+                if(node == GraphUtils.targetNode)
                     drawNode(g,x,y,25,25,node.getLabel(),Color.black);
                 else
                     drawNode(g,x,y,25,25,node.getLabel(),Color.red);

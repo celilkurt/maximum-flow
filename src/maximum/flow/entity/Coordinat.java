@@ -1,7 +1,7 @@
 
 
 
-package maximum.flow;
+package maximum.flow.entity;
 
 public class Coordinat {
     
